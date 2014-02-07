@@ -14,7 +14,7 @@
 
 @implementation ViewController
 
-@synthesize image,outletCamera;
+@synthesize image,outletCamera,outletPhoto;
 
 
 - (void)viewDidLoad
@@ -32,6 +32,15 @@
     [self presentViewController:self.imagePicker animated:YES completion:nil];
 
 }
+- (IBAction)searchPhotos:(UIBarButtonItem *)sender
+{
+    self.imagePicker=[[UIImagePickerController alloc]init];
+    self.imagePicker.delegate=self;
+    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    [self presentViewController:self.imagePicker animated:YES completion:nil];
+}
+
+
 
 //  ImagePicker selecionou uma imagem
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

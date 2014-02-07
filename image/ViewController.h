@@ -10,6 +10,7 @@
 
 @interface ViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *outletPhoto;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *outletCamera;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 
