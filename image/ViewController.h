@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *outletCamera;
+@property (weak, nonatomic) IBOutlet UIImageView *image;
+
+
+// work properties
+@property(strong,nonatomic) UIImage *imagemEscolhida;
+@property(strong,nonatomic) UIImagePickerController *imagePicker;
 
 @end
