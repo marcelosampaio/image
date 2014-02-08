@@ -10,13 +10,14 @@
 
 @interface ViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *outletPhoto;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *outletCamera;
 @property (weak, nonatomic) IBOutlet UIImageView *image;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *action;
 
 
 // work properties
 @property(strong,nonatomic) UIImage *imagemEscolhida;
 @property(strong,nonatomic) UIImagePickerController *imagePicker;
+
 
 @end

@@ -24,9 +24,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Image" id="wn2-6y-wp9">
-                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="x5a-a9-mLZ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="OdD-XN-iEm">
                             <connections>
-                                <action selector="searchPhotos:" destination="vXZ-lx-hvc" id="Yrd-74-EE4"/>
+                                <action selector="action:" destination="vXZ-lx-hvc" id="NOA-dT-4pG"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="d8z-cK-t8f">
@@ -36,9 +36,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="action" destination="OdD-XN-iEm" id="7Yh-Tz-4Vi"/>
                         <outlet property="image" destination="Rg0-1a-UhA" id="R3S-oI-v0a"/>
                         <outlet property="outletCamera" destination="d8z-cK-t8f" id="erj-Cb-o1K"/>
-                        <outlet property="outletPhoto" destination="x5a-a9-mLZ" id="98C-df-vl7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

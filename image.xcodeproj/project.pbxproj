@@ -474,6 +474,7 @@
 				9CE3843D18A564A000CB82B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9CE3843E18A564A000CB82B4 /* Build configuration list for PBXNativeTarget "imageTests" */ = {
 			isa = XCConfigurationList;
@@ -482,6 +483,7 @@
 				9CE3844018A564A000CB82B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

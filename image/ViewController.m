@@ -14,32 +14,51 @@
 
 @implementation ViewController
 
-@synthesize image,outletCamera,outletPhoto;
+@synthesize image,outletCamera,action;
+
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
 }
 
 - (IBAction)captureImage:(UIBarButtonItem *)sender
 {
     self.imagePicker=[[UIImagePickerController alloc]init];
     self.imagePicker.delegate=self;
-    //    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     [self.imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
     [self presentViewController:self.imagePicker animated:YES completion:nil];
 
 }
-- (IBAction)searchPhotos:(UIBarButtonItem *)sender
-{
-    self.imagePicker=[[UIImagePickerController alloc]init];
-    self.imagePicker.delegate=self;
-    [self.imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    [self presentViewController:self.imagePicker animated:YES completion:nil];
-}
 
+- (IBAction)action:(UIBarButtonItem *)sender
+{
+    NSLog(@"get photo from documents folder");
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image.png"];
+    NSData *pngData = [NSData dataWithContentsOfFile:filePath];
+    
+    self.image.image = [UIImage imageWithData:pngData];
+    
+
+    UIImage *rotatedImage;
+    
+    // All photos have been taken in UP orientation, so they must be rotated to be seen
+    if (self.image.image.imageOrientation==UIImageOrientationUp) {
+        NSLog(@"orientation UP");
+        rotatedImage = [[UIImage alloc] initWithCGImage: self.image.image.CGImage
+                                                  scale: 1.0
+                                            orientation: UIImageOrientationRight];
+
+        self.image.image=rotatedImage;
+    }
+
+}
 
 
 //  ImagePicker selecionou uma imagem
@@ -50,8 +69,11 @@
     [self.image setImage:self.imagemEscolhida];
     [self dismissViewControllerAnimated:YES completion:nil];
     
+    // store image in documents folder
+    [self storeImageInDocumentsLibrary];
+    
+    
 }
-
 
 // ImagePicker cancelado
 
@@ -60,9 +82,43 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(void)storeImageInDocumentsLibrary
+{
+    NSLog(@"store in document folder");
+    NSData *pngData = UIImagePNGRepresentation(self.image.image);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image.png"]; //Add the file name
+    NSLog(@"pathName=%@",filePath);
+    [pngData writeToFile:filePath atomically:YES]; //Write the file
+    
+    
+}
 
+// Store image inside photo library
+-(void)storeImageInPhotoLibrary
+{
+    // Request to save the image to camera roll
+    UIImageWriteToSavedPhotosAlbum(self.image.image, self,
+                                   @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+}
 
-
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error
+  contextInfo:(void *)contextInfo
+{
+    // Was there an error?
+    if (error != NULL)
+    {
+        NSLog(@"Error saving the image");
+        
+    }
+    else  // No errors
+    {
+        NSLog(@"image has been succesfuly stored");
+    }
+}
 
 
 
