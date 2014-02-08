@@ -18,10 +18,12 @@
 
 
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+
     
 }
 
@@ -34,6 +36,11 @@
 
 }
 
+//- (NSArray *)contentsOfDirectoryAtPath:(NSString *)path error:(NSError **)error{
+//    NSLog(@"inside directory");
+//    return [[NSArray alloc]init];
+//}
+
 - (IBAction)action:(UIBarButtonItem *)sender
 {
     NSLog(@"get photo from documents folder");
@@ -43,14 +50,32 @@
     NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image.png"];
     NSData *pngData = [NSData dataWithContentsOfFile:filePath];
     
-    self.image.image = [UIImage imageWithData:pngData];
+    NSLog(@"documentsPath=%@",documentsPath);
     
-
-    UIImage *rotatedImage;
+    NSFileManager *fileManager=[[NSFileManager alloc]init];
+    NSArray *array=[fileManager contentsOfDirectoryAtPath:documentsPath error:nil];
+    NSLog(@"total de arquivos em File Manager=%d",[array count]);
+    
+    for (int i=0; i<[array count]; i++) {
+        NSLog(@"...... conteudo: %@",[array objectAtIndex:i]);
+    }
+    
+    
+    
+    
+    
+    BOOL fileExists = [[NSFileManager defaultManager]fileExistsAtPath:filePath];
+    if (fileExists) {
+        NSLog(@"file EXISTS");
+    }else{
+        NSLog(@"file DOES NO+T EXIST");
+    }
+    
+    self.image.image = [UIImage imageWithData:pngData];
     
     // All photos have been taken in UP orientation, so they must be rotated to be seen
     if (self.image.image.imageOrientation==UIImageOrientationUp) {
-        NSLog(@"orientation UP");
+        UIImage *rotatedImage;
         rotatedImage = [[UIImage alloc] initWithCGImage: self.image.image.CGImage
                                                   scale: 1.0
                                             orientation: UIImageOrientationRight];
@@ -60,7 +85,6 @@
 
 }
 
-
 //  ImagePicker selecionou uma imagem
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -68,6 +92,7 @@
 
     [self.image setImage:self.imagemEscolhida];
     [self dismissViewControllerAnimated:YES completion:nil];
+
     
     // store image in documents folder
     [self storeImageInDocumentsLibrary];
@@ -79,7 +104,9 @@
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+    NSLog(@"cancel action");
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 -(void)storeImageInDocumentsLibrary
@@ -92,6 +119,7 @@
     NSString *filePath = [documentsPath stringByAppendingPathComponent:@"image.png"]; //Add the file name
     NSLog(@"pathName=%@",filePath);
     [pngData writeToFile:filePath atomically:YES]; //Write the file
+
     
     
 }
@@ -104,6 +132,7 @@
                                    @selector(image:didFinishSavingWithError:contextInfo:), nil);
     
 }
+
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error
   contextInfo:(void *)contextInfo

@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *action;
 
 
+
 // work properties
 @property(strong,nonatomic) UIImage *imagemEscolhida;
 @property(strong,nonatomic) UIImagePickerController *imagePicker;
