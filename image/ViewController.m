@@ -18,7 +18,7 @@
 
 
 
-
+#pragma mark - Initialization
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,6 +27,7 @@
     
 }
 
+#pragma mark - UI Action
 - (IBAction)captureImage:(UIBarButtonItem *)sender
 {
     self.imagePicker=[[UIImagePickerController alloc]init];
@@ -85,6 +86,7 @@
 
 }
 
+#pragma mark - UIPickerImage Delegate Methods
 //  ImagePicker selecionou uma imagem
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -100,6 +102,7 @@
     
 }
 
+
 // ImagePicker cancelado
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -109,6 +112,8 @@
     
 }
 
+
+#pragma mark - Working Methods
 -(void)storeImageInDocumentsLibrary
 {
     NSLog(@"store in document folder");
@@ -133,7 +138,7 @@
     
 }
 
-
+#pragma mark - Image Saving Method Delegate
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error
   contextInfo:(void *)contextInfo
 {
@@ -141,20 +146,11 @@
     if (error != NULL)
     {
         NSLog(@"Error saving the image");
-        
     }
     else  // No errors
     {
         NSLog(@"image has been succesfuly stored");
     }
-}
-
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
